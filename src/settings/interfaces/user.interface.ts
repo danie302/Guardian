@@ -6,5 +6,6 @@ export interface IUser extends Document {
   username: string;
   lastname: string;
   password: string;
-  priority: string;
+  priority: number;
+  locationId: string;
 }

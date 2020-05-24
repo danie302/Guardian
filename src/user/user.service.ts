@@ -4,6 +4,7 @@ import { genSaltSync, hashSync } from 'bcrypt';
 import { InjectModel } from '@nestjs/mongoose';
 import { IUser } from 'src/settings/interfaces/user.interface';
 import { CreateUserDTO } from 'src/settings/dto/create-user.dto';
+import { UpdateUserDTO } from 'src/settings/dto/update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -34,5 +35,38 @@ export class UserService {
 
   async findById(id: string): Promise<IUser> {
     return this.userModel.findById(id);
+  }
+
+  async updateById(userId: string, newUserData: UpdateUserDTO): Promise<IUser> {
+    return this.userModel.findByIdAndUpdate(userId, newUserData).lean();
+  }
+
+  async deleteById(userId: string): Promise<IUser> {
+    const deletedUser = {
+      username: '',
+      visible: false,
+    };
+    return this.userModel
+      .findOneAndUpdate({ _id: userId, visible: true }, deletedUser)
+      .lean();
+  }
+
+  async disableById(userId: string): Promise<IUser> {
+    const disableUser = {
+      active: false,
+    };
+
+    return this.userModel
+      .findOneAndUpdate({ _id: userId, active: true }, disableUser)
+      .lean();
+  }
+
+  async enableById(userId: string): Promise<IUser> {
+    const enableUser = {
+      active: true,
+    };
+    return this.userModel
+      .findOneAndUpdate({ _id: userId, active: false }, enableUser)
+      .lean();
   }
 }

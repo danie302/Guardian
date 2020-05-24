@@ -57,10 +57,10 @@ export class LocationService {
     const disableLocation = {
       active: false,
     };
-    this.locationModel
+
+    return this.locationModel
       .findOneAndUpdate({ _id: locationId, active: true }, disableLocation)
       .lean();
-    return this.locationModel.findByIdAndUpdate(locationId, disableLocation);
   }
 
   async enableById(locationId: string): Promise<ILocation> {

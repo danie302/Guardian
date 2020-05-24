@@ -10,51 +10,61 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { LocationService } from './location.service';
+import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { CreateLocationDTO } from '../settings/dto/create-location.dto';
 import { ILocation } from '../settings/interfaces/location.interface';
 import { UpdateLocationDTO } from 'src/settings/dto/update-location.dto';
 
+@ApiBearerAuth()
+@ApiTags('Locations')
 @Controller('location')
 export class LocationController {
   constructor(private locationService: LocationService) {}
 
-  @UseGuards(AuthGuard('jwt'))
   @Post()
+  @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Create Location' })
   create(@Body() createLocationDTO: CreateLocationDTO) {
     return this.locationService.create(createLocationDTO);
   }
-  @UseGuards(AuthGuard('jwt'))
   @Get()
+  @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Get Locations' })
   getDoors() {
     return this.locationService.findAll();
   }
 
-  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
+  @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Get Location By ID' })
   findById(@Param('id') id): Promise<ILocation> {
     return this.locationService.findById(id);
   }
 
-  @UseGuards(AuthGuard('jwt'))
   @Patch(':id')
+  @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Update Location By ID' })
   updateById(@Body() updateLocationDTO: UpdateLocationDTO, @Param('id') id) {
     return this.locationService.updateById(id, updateLocationDTO);
   }
 
-  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
+  @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Delete Location By ID' })
   deleteById(@Param('id') id) {
     return this.locationService.deleteById(id);
   }
 
-  @UseGuards(AuthGuard('jwt'))
   @Patch('disable/:id')
+  @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Disable Location By ID' })
   disableById(@Param('id') id) {
     return this.locationService.disableById(id);
   }
 
-  @UseGuards(AuthGuard('jwt'))
   @Patch('enable/:id')
+  @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Enable Location By ID' })
   enableById(@Param('id') id) {
     return this.locationService.enableById(id);
   }

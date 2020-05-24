@@ -1,8 +1,8 @@
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './constants';
+import { jwtConstants } from '../settings/constants';
 import { AuthService } from './auth.service';
-import { JwtStrategy } from './jwt.strategy';
-import { LocalStrategy } from './local.strategy';
+import { JwtStrategy } from '../settings/strategies/jwt.strategy';
+import { LocalStrategy } from '../settings/strategies/local.strategy';
 import { UserModule } from 'src/user/user.module';
 import { PassportModule } from '@nestjs/passport';
 import { Module, forwardRef } from '@nestjs/common';

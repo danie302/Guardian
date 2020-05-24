@@ -3,6 +3,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { LocationModule } from './location/location.module';
+import { GateModule } from './gate/gate.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { LocationModule } from './location/location.module';
     ),
     UserModule,
     AuthModule,
+    GateModule,
     LocationModule,
   ],
 })
